@@ -16,5 +16,5 @@ const plainConfiguration = {
     poweredByHeader: false,
 };
 
-console.log(`plainConfiguration = ${plainConfiguration}`);
+console.log(`next.config.js = ${JSON.stringify(plainConfiguration, null, 2)}`);
 module.exports = plainConfiguration;

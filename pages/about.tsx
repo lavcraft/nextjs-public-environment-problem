@@ -8,10 +8,11 @@ console.log(`process.env.NEXT_PUBLIC_BACKEND_ENDPOINT = ${process.env.NEXT_PUBLI
 const AboutPage = () => {
     console.log(`getPublicConfiguration().backendEndpoint = ${getPublicConfiguration().backendEndpoint}`);
     console.log(`process.env.NEXT_PUBLIC_BACKEND_ENDPOINT = ${process.env.NEXT_PUBLIC_BACKEND_ENDPOINT}`);
-    import.meta.url;
     return (
         <Layout title="About | Next.js + TypeScript Example">
             <h1>About</h1>
+            <p>{`from next getConfig() = ${getPublicConfiguration().backendEndpoint}`}</p>
+            <p>{`process.env.NEXT_PUBLIC_BACKEND_ENDPOINT = ${process.env.NEXT_PUBLIC_BACKEND_ENDPOINT}`}</p>
             <p>This is the about page</p>
             <p>
                 <Link href="/">

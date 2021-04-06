@@ -1,41 +1,15 @@
-# TypeScript Next.js example
+# Reproduce problem with NEXT_PUBLIC_ env vars exposing to browser
 
-This is a really simple project that shows the usage of Next.js with TypeScript.
+1. `unset NEXT_PUBLIC_BACKEND_ENDPOINT`
+1. `rm -f .next; npm run build`
+1. `export NEXT_PUBLIC_BACKEND_ENDPOINT='http://localhost:8081'`
+1. `npm run start`
+1. `open http://localhost:3000`
+1. See `from next getConfig() = http://localhost:8081` and `process.env.NEXT_PUBLIC_BACKEND_ENDPOINT = undefined`
+1. Go to Chrome Dev Tools. Find in Network localhost response and open Preview tab in request/response inspector
+1. See `process.env.NEXT_PUBLIC_BACKEND_ENDPOINT = http://localhost:8081` in preview. But after client side rendering this will undefined. See #6
+1. Next problem - Click About link. 
+1. See again `from next getConfig() = http://localhost:8081` and `process.env.NEXT_PUBLIC_BACKEND_ENDPOINT = undefined`
+1. But now - refresh the page. And see default value instead of real value from NEXT_PUBLIC_BACKEND_ENDPOINT (with 8080 port) `from next getConfig() = http://localhost:8080` and `process.env.NEXT_PUBLIC_BACKEND_ENDPOINT = undefined`
 
-## Deploy your own
-
-Deploy the example using [Vercel](https://vercel.com?utm_source=github&utm_medium=readme&utm_campaign=next-example):
-
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/git/external?repository-url=https://github.com/vercel/next.js/tree/canary/examples/with-typescript&project-name=with-typescript&repository-name=with-typescript)
-
-## How to use it?
-
-Execute [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app) with [npm](https://docs.npmjs.com/cli/init) or [Yarn](https://yarnpkg.com/lang/en/docs/cli/create/) to bootstrap the example:
-
-```bash
-npx create-next-app --example with-typescript with-typescript-app
-# or
-yarn create next-app --example with-typescript with-typescript-app
-```
-
-Deploy it to the cloud with [Vercel](https://vercel.com/new?utm_source=github&utm_medium=readme&utm_campaign=next-example) ([Documentation](https://nextjs.org/docs/deployment)).
-
-## Notes
-
-This example shows how to integrate the TypeScript type system into Next.js. Since TypeScript is supported out of the box with Next.js, all we have to do is to install TypeScript.
-
-```
-npm install --save-dev typescript
-```
-
-To enable TypeScript's features, we install the type declarations for React and Node.
-
-```
-npm install --save-dev @types/react @types/react-dom @types/node
-```
-
-When we run `next dev` the next time, Next.js will start looking for any `.ts` or `.tsx` files in our project and builds it. It even automatically creates a `tsconfig.json` file for our project with the recommended settings.
-
-Next.js has built-in TypeScript declarations, so we'll get autocompletion for Next.js' modules straight away.
-
-A `type-check` script is also added to `package.json`, which runs TypeScript's `tsc` CLI in `noEmit` mode to run type-checking separately. You can then include this, for example, in your `test` scripts.
+It's a two kind of bug or its normal behavior?
